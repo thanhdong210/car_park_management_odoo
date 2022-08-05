@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="lot_vehicle_relation_form_view" model="ir.ui.view">
+            <field name="name">lot.vehicle.relation.form.view</field>
+            <field name="model">lot.vehicle.relation</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="images">
+                            <group>
+                                <field name="lot"/>
+                                <field name="vehicle"/>
+                                <field name="quantity"/>
+                                <!-- <field name="vehicle_compute" invisible="1"/> -->
+                            </group>                          
+                        </group>
+                    </sheet>
+                    <notebook>
+                        <page name="general_information" string="General Information">
+                            <group>
+                                
+                            </group>
+                        </page>                            
+					</notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="lot_vehicle_relation_tree_view" model="ir.ui.view">
+            <field name="name">lot.vehicle.relation.tree.view</field>
+            <field name="model">lot.vehicle.relation</field>
+            <field name="arch" type="xml">
+                <tree string="Parking lot">
+                    <field name="lot"/>
+                    <field name="vehicle"/>
+                    <field name="quantity"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_lot_vehicle_relation" model="ir.actions.act_window">
+            <field name="name">Lot vehicle relation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lot.vehicle.relation</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('lot_vehicle_relation_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('lot_vehicle_relation_form_view')})]"/>
+        </record>
+
+        
+    </data>
+</odoo>

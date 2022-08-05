@@ -1,0 +1,27 @@
+<odoo>
+    <template id="report_action_revenue_car_type">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe-structure">
+                        <div class="text-center">
+                            Report revenue by car type
+                        </div>
+
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                    Car type: <t t-esc="form_data['car_type_id']"/>
+                                    <br/>
+                                    Total price: <t t-esc="price"/> vnd
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="parking_lot_form_view" model="ir.ui.view">
+            <field name="name">parking.lot.form.view</field>
+            <field name="model">parking.lot</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="open_car_park" string="Open Parking Ticket" type="object" class="oe_link" icon="fa-folder-open"></button>
+                        </div>
+                        <group name="images">
+                            <group>
+                                <field name="parking_lot_name"/>
+                                <field name="working_time_from" widget='float_time'/>
+                                
+                                <field name="working_time_to" widget='float_time'/>
+                                <field name="total_car_now"/>
+                                <field name="total_limit_lot"/>
+                                <field name="pricelist_id"/>
+                            </group>                          
+                        </group>
+                        <notebook>
+                            <page name="general_information" string="General Information">
+                                <group>
+                                    <field name="parking_vehicle_relation_ids" domain="[('lot.id', 'in', [id])]"/>
+                                </group>
+                            </page>
+                            <page name="date_to_report" string="Choose date for report">
+                                <group>
+                                    <field name="from_date"/>
+                                    <field name="to_date"/>
+                                </group>
+                            </page>                            
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="parking_lot_tree_view" model="ir.ui.view">
+            <field name="name">parking.lot.tree.view</field>
+            <field name="model">parking.lot</field>
+            <field name="arch" type="xml">
+                <tree string="Parking lot">
+                    <field name="parking_lot_name"/>
+                    <field name="working_time_from" widget='float_time'/>
+                    
+                    <field name="working_time_to" widget='float_time'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="parking_lot_kanban_view"
+            model="ir.ui.view">
+            <field name="model">parking.lot</field>
+            <field name="arch" type="xml">
+                <kanban class="o_hr_employee_kanban" js_class="hr_employee_kanban" sample="1" style="100px">
+                <templates>
+                    <t t-name="kanban-box">
+                    <div class="oe_kanban_global_click o_kanban_record_has_image_fill" style="display: block">
+                        <div>
+                            Parking name: <field name="parking_lot_name" />
+                        </div>
+                        <div>
+                            Working from: <field name="working_time_from" widget='float_time'/>
+                        </div>
+
+                        <div>
+                            Working to: <field name="working_time_to" widget='float_time'/>
+                        </div>
+                        <div>
+                            <button name="open_car_park_kanban" type="object" string="Open Parking Ticket" icon="fa-folder-open" class="btn btn-primary" style="height: 30px, width: 40px">Open Parking Ticket</button>
+                        </div>
+                        
+                    </div>
+                    </t>
+                </templates>
+                </kanban>
+            </field>
+        </record>       
+
+        <record id="action_parking_lot" model="ir.actions.act_window">
+            <field name="name">Parking lot</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">parking.lot</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('parking_lot_kanban_view')}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('parking_lot_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('parking_lot_form_view')})]"/>
+        </record>
+        
+        <menuitem id="menu_parking_lot"
+            name="Parking Lot"
+            action="action_parking_lot"
+            sequence="10"
+            groups="base.group_user"/>
+
+        <menuitem 
+            name="Parking Vehicle" 
+            id="menu_parking_vehicle" 
+            sequence="450" 
+            action="action_parking_vehicle" 
+            parent="menu_parking_lot"/>
+
+        <menuitem id="menu_lot_vehicle_relation"
+            name="Lot Vehicle Relation"
+            action="action_lot_vehicle_relation"
+            sequence="10"
+            groups="base.group_user"
+            parent="menu_parking_lot"/>
+
+        <menuitem id="menu_parking_pricelist_item"
+            name="Parking Pricelist Item"
+            action="action_parking_pricelist_item"
+            sequence="10"
+            groups="base.group_user"
+            parent="menu_parking_lot"/>
+
+        <menuitem id="menu_parking_pricelist"
+            name="Parking Pricelist"
+            action="action_parking_pricelist"
+            sequence="10"
+            groups="base.group_user"
+            parent="menu_parking_lot"/>
+
+        <menuitem id="menu_parking_ticket"
+            name="Parking Ticket"
+            action="action_parking_ticket2"
+            sequence="10"
+            groups="base.group_user"
+            parent="menu_parking_lot"/>
+
+        <menuitem id="menu_reporting"
+            name="Reporting"
+            sequence="40"
+            parent="menu_parking_lot"/>
+
+        <menuitem id="menu_parking_ticket_report"
+            name="Parking Ticket Report"
+            action="action_report_parking_ticket"
+            sequence="10"
+            parent="menu_reporting"/>
+
+        <menuitem id="menu_revenue_car_type"
+            name="Report Revenue By Car Type"
+            action="action_report_revenue_car_type"
+            sequence="10"
+            parent="menu_reporting"/>
+
+        <menuitem id="menu_revenue_lot"
+            name="Report Revenue By Parking Lot"
+            action="action_report_revenue_lot"
+            sequence="10"
+            parent="menu_reporting"/>
+
+        <menuitem id="menu_revenue_lot_df"
+            name="Report Revenue"
+            action="action_report_revenue"
+            sequence="10"
+            parent="menu_reporting"/>
+    </data>
+</odoo>

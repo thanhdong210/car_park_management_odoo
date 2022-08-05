@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="parking_ticket_form_view" model="ir.ui.view">
+            <field name="name">parking.ticket.form.view</field>
+            <field name="model">parking.ticket</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_check_out" string="Check out" type="object" class="oe_link" icon="fa-check-square-o"/>
+                            
+                        </div>
+                        <group name="images">
+                            <group>
+                                <field name="parking_lot_id"  readonly='True'/>
+                                <field name="parking_ticket_name"/>
+                                <field name="car_image" string="Car's Image" widget="image"/>
+                                <field name="car_type_id"/>
+                                <field name="check_in"/>
+                                <field name="code"/>
+                                <field name="check_out" readonly="1"/>
+                                <field name="total_time" readonly='True' force_save="1"/>
+                                <field name="price" readonly="1"/>
+                                <field name="state" readonly="1"/>
+                            </group>                          
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="parking_ticket_tree_view" model="ir.ui.view">
+            <field name="name">parking.ticket.tree.view</field>
+            <field name="model">parking.ticket</field>
+            <field name="arch" type="xml">
+                <tree string="Parking ticket">
+                    <field name="parking_ticket_name"/>
+                    <field name="parking_lot_id"/>
+                    <field name="total_time"/>
+                    <field name="car_type_id"/>
+                    <field name="price"/>
+                    <field name="check_out"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="parking_ticket_search" model="ir.ui.view">
+            <field name="name">parking.ticket.search</field>
+            <field name="model">parking.ticket</field>
+            <field name="arch" type="xml">
+                <search string="Parking ticket">
+                    <separator/>
+                    <filter string="Car havent checked out" name="state" domain="[('state', '=', 'staying_in')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_parking_ticket2" model="ir.actions.act_window">
+            <field name="name">Parking ticket</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">parking.ticket</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('parking_ticket_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('parking_ticket_form_view')})]"/>
+        </record>
+
+        
+    </data>
+</odoo>

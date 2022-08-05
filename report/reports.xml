@@ -1,0 +1,75 @@
+<odoo>
+  <record id="parking_lot_report" model="ir.actions.report">
+    <field name="name">Total car now</field>
+    <field name="model">parking.lot</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">intern_exercise.parking_lot_report</field>
+    <field name="report_file">intern_exercise.parking_lot_report</field>
+    <field name="print_report_name">parking.lot</field>
+    <field name="binding_model_id" ref="model_parking_lot"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <record id="action_open_report_parking_ticket" model="ir.actions.report">
+    <field name="name">Report Ticket</field>
+    <field name="model">ticket.report.wizard</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">intern_exercise.report_action_parking_ticket</field>
+    <field name="report_file">intern_exercise.report_action_parking_ticket</field>
+    <field name="print_report_name">ticket.report.wizard</field>
+    <field name="binding_model_id" ref="model_ticket_report_wizard"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <record id="action_open_revenue_car_type" model="ir.actions.report">
+    <field name="name">Report revenue by car type</field>
+    <field name="model">revenue.report.car.type</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">intern_exercise.report_action_revenue_car_type</field>
+    <field name="report_file">intern_exercise.report_action_revenue_car_type</field>
+    <field name="print_report_name">revenue.report.car.type</field>
+    <field name="binding_model_id" ref="model_revenue_report_car_type"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <record id="action_open_revenue_lot" model="ir.actions.report">
+    <field name="name">Report revenue by parking lot</field>
+    <field name="model">revenue.report.lot</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">intern_exercise.report_action_revenue_lot</field>
+    <field name="report_file">intern_exercise.report_action_revenue_lot</field>
+    <field name="print_report_name">revenue.report.car.type</field>
+    <field name="binding_model_id" ref="model_revenue_report_lot"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <record id="action_open_ticket_xlsx" model="ir.actions.report">
+    <field name="name">Report ticket excel</field>
+    <field name="model">parking.ticket</field>
+    <field name="report_type">xlsx</field>
+    <field name="report_name">intern_exercise.report_action_ticket_xlsx</field>
+    <field name="report_file">intern_exercise.report_action_ticket_xlsx</field>
+    <field name="binding_model_id" ref="model_parking_ticket"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <record id="action_open_revenue_lot_xlsx" model="ir.actions.report">
+    <field name="name">Report revenue by parking lot excel</field>
+    <field name="model">revenue.report.lot</field>
+    <field name="report_type">xlsx</field>
+    <field name="report_name">intern_exercise.report_action_revenue_lot_xlsx</field>
+    <field name="report_file">intern_exercise.report_action_revenue_lot_xlsx</field>
+    <field name="binding_model_id" ref="model_revenue_report_lot"/>
+    <field name="binding_type">report</field>
+  </record>
+
+  <record id="action_open_revenue_xlsx" model="ir.actions.report">
+    <field name="name">Report revenue excel</field>
+    <field name="model">report.revenue</field>
+    <field name="report_type">xlsx</field>
+    <field name="report_name">intern_exercise.report_action_revenue_xlsx</field>
+    <field name="report_file">intern_exercise.report_action_revenue_xlsx</field>
+    <field name="binding_model_id" ref="model_report_revenue"/>
+    <field name="binding_type">report</field>
+  </record>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="parking_vehicle_form_view" model="ir.ui.view">
+            <field name="name">parking.vehicle.form.view</field>
+            <field name="model">parking.vehicle</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="images">
+                            <group>
+                                <field name="parking_vehicle_name"/>
+                            </group>                          
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="parking_vehicle_tree_view" model="ir.ui.view">
+            <field name="name">parking.vehicle.tree.view</field>
+            <field name="model">parking.vehicle</field>
+            <field name="arch" type="xml">
+                <tree string="Parking vehicle">
+                    <field name="parking_vehicle_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_parking_vehicle" model="ir.actions.act_window">
+            <field name="name">Parking vehicle</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">parking.vehicle</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('parking_vehicle_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('parking_vehicle_form_view')})]"/>
+        </record>
+
+        
+    </data>
+</odoo>

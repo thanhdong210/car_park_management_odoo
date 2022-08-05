@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="parking_pricelist_form_view" model="ir.ui.view">
+            <field name="name">parking.pricelist.form.view</field>
+            <field name="model">parking.pricelist</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="images">
+                            <group>
+                               <!--  <field name="manage_type"/>
+                                <field name="check_time_begin_type" invisible='1'/>
+                                <field name="check_time_saving_type" invisible='1'/> -->
+                                <field name="name"/>
+                                <field name="parking_pricelist_item_ids" style="width:100%%">
+                                    <tree string="Item" editable="bottom">
+                                        <field name="car_type_id"/>  
+                                        <field name="from_hour"/>
+                                        <field name="to_hour"/>
+                                        <field name="price"/>
+                                    </tree>
+                                </field>
+                                <!-- <field name="hours1" attrs="{'invisible':[('check_time_begin_type','=',False)]}"/>
+                                <field name="price1" attrs="{'invisible':[('check_time_begin_type','=',False)]}"/>
+                                <field name="hours2" attrs="{'invisible':[('check_time_begin_type','=',False)]}"/>
+                                <field name="price2" attrs="{'invisible':[('check_time_begin_type','=',False)]}"/>
+                                <field name="time_saving" attrs="{'invisible':[('check_time_saving_type','=',False)]}"/> -->
+                                <!-- <field name="price"/>
+                                <field name="state" invisible="1"/> -->
+                            </group>                          
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="parking_pricelist_tree_view" model="ir.ui.view">
+            <field name="name">parking.pricelist.tree.view</field>
+            <field name="model">parking.pricelist</field>
+            <field name="arch" type="xml">
+                <tree string="Parking pricelist">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_parking_pricelist" model="ir.actions.act_window">
+            <field name="name">Parking pricelist</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">parking.pricelist</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('parking_pricelist_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('parking_pricelist_form_view')})]"/>
+        </record>
+        
+    </data>
+</odoo>

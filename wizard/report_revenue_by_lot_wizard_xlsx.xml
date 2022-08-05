@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="report_revenue_lot_wizard_xlsx" model="ir.ui.view">
+            <field name="name">revenue.report.lot.xlsx.form</field>
+            <field name="model">revenue.report.lot.xlsx</field>
+            <field name="inherit_id" ref="intern_exercise.report_revenue_lot_wizard"/>
+            <field name="arch" type="xml">
+                
+            </field>
+        </record>
+    </data>
+</odoo>

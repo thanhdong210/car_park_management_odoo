@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_revenue_car_type_wizard" model="ir.ui.view">
+            <field name="name">revenue.report.car.type.form</field>
+            <field name="model">revenue.report.car.type</field>
+            <field name="arch" type="xml">
+                <form string="Report revenue by car type">
+                    <group>
+                        <group>
+                            <field name="car_type_id"/>
+                        </group>
+                        <group/>
+                    </group>    
+                    <footer>
+                        <button string="Confirm" name="action_report" type="object" default_focus="1" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_report_revenue_car_type" model="ir.actions.act_window">
+            <field name="name">Revenue by car type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">revenue.report.car.type</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="report_revenue_car_type_wizard"/>
+        </record>
+    </data>
+</odoo>

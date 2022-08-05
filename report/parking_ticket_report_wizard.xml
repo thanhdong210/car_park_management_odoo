@@ -1,0 +1,29 @@
+<odoo>
+    <template id="report_action_parking_ticket">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe-structure">
+                        <div class="text-center">
+                            Ticket Report
+                        </div>
+
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                    From date: <t t-esc="form_data['from_date']"/>
+                                    <br/>
+                                    To date: <t t-esc="form_data['to_date']"/>
+                                    <br/>
+                                    Total price: <t t-esc="price"/> vnd
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
