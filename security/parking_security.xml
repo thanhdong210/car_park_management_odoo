@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="group_parking_manager" model="res.groups">
+            <field name="name">Parking Administrator</field>
+            <field name="comment">The user will have access to parking module.</field>
+        </record>
+    </data>
+</odoo>
