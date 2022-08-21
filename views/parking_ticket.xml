@@ -18,6 +18,8 @@
                                 <field name="car_image" string="Car's Image" widget="image"/>
                                 <field name="car_type_id"/>
                                 <field name="check_in"/>
+                            </group>
+                            <group>
                                 <field name="code"/>
                                 <field name="check_out" readonly="1"/>
                                 <field name="total_time" readonly='True' force_save="1"/>

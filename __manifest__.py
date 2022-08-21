@@ -5,11 +5,12 @@
     'author': "Thanh Dong",
     'website': "None",
     'category': 'Uncategorized',
-    'version': '0.1',
+    'version': '1.0',
     'depends': [
         'report_xlsx'
     ],
     'data': [
+        'security/parking_security.xml',
         'security/ir.model.access.csv',
 
         'views/lot_vehicle_relation.xml',
@@ -18,6 +19,7 @@
         'views/parking_pricelist.xml',
         'views/parking_pricelist_item.xml',
         'views/check_out_action_popup.xml',
+        'views/parking_lot.xml',
 
         'wizard/report_parking_lot.xml',
         'wizard/report_parking_ticket.xml',
@@ -31,8 +33,6 @@
         'report/parking_ticket_report_wizard.xml',
         'report/report_revenue_by_car_type.xml',
         'report/report_revenue_by_lot.xml',
-
-        'views/parking_lot.xml',
     ],
     'qweb': ['static/src/xml/*.xml'],
     'installable': True,

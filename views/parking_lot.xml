@@ -14,12 +14,13 @@
                             <group>
                                 <field name="parking_lot_name"/>
                                 <field name="working_time_from" widget='float_time'/>
-                                
                                 <field name="working_time_to" widget='float_time'/>
+                            </group>   
+                            <group>
                                 <field name="total_car_now"/>
                                 <field name="total_limit_lot"/>
                                 <field name="pricelist_id"/>
-                            </group>                          
+                            </group>                       
                         </group>
                         <notebook>
                             <page name="general_information" string="General Information">
@@ -27,12 +28,6 @@
                                     <field name="parking_vehicle_relation_ids" domain="[('lot.id', 'in', [id])]"/>
                                 </group>
                             </page>
-                            <page name="date_to_report" string="Choose date for report">
-                                <group>
-                                    <field name="from_date"/>
-                                    <field name="to_date"/>
-                                </group>
-                            </page>                            
                         </notebook>
                     </sheet>
                 </form>

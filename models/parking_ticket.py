@@ -16,8 +16,7 @@ class ParkingTicket(models.Model):
     parking_lot_id = fields.Many2one('parking.lot', required=True)
     parking_lot_id_relate = fields.Integer(related='parking_lot_id.id')
     car_image = fields.Binary("Car Image", attachment=True, help="Car Image")
-    car_type_id = fields.Many2one("lot.vehicle.relation", required=True, domain="[('lot.id', 'in', [parking_lot_id])]")
-    car_type_id_relate = fields.Integer(related='car_type_id.vehicle.id')
+    car_type_id = fields.Many2one("parking.vehicle", required=True)
     check_in = fields.Datetime("Check in", required=True)
     check_out = fields.Datetime("Checkout")
     total_time = fields.Char("Total time")
@@ -27,6 +26,12 @@ class ParkingTicket(models.Model):
                 ('checked_out', "Checked out"),
                 ('staying_in', "Staying in")
             ], default='staying_in')
+
+    @api.onchange('car_type_id')
+    def _domain_parking_vehicle_type(self):
+        car_type_ids = self.env['parking.lot'].search([('id', '=', self.env.context.get('default_parking_lot_id'))]).parking_vehicle_relation_ids.vehicle
+        domain = {'car_type_id': [('id', 'in', car_type_ids.ids)]}
+        return {'domain': domain}  
 
     def action_check_out(self):  
         self.check_out = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -40,7 +45,7 @@ class ParkingTicket(models.Model):
         global price1
         price1 = 0
         for record in self:
-            line = self.env['parking.pricelist.item'].search([('car_type_id.id', '=', record.car_type_id_relate), ('parking_pricelist_id.id', '=', record.parking_lot_id.pricelist_id.id)])
+            line = self.env['parking.pricelist.item'].search([('car_type_id', '=', record.car_type_id.id), ('parking_pricelist_id.id', '=', record.parking_lot_id.pricelist_id.id)])
             for row in line:
                 if float(record.total_time) >= row.from_hour and float(record.total_time) <= row.to_hour:                    
                     price1 = row.price
@@ -58,25 +63,38 @@ class ParkingTicket(models.Model):
         }
 
     def _check_lot_is_full(self, parking_ticket, parking_lot):
-        total_car_type_in_lot = self.env['parking.ticket'].search_count([('car_type_id', '=', parking_ticket), ('parking_lot_id', '=', parking_lot)])
+        total_car_type_in_lot = self.env['parking.ticket'].search_count([('car_type_id', '=', parking_ticket), ('parking_lot_id', '=', parking_lot), ('check_out', '!=', False)])
         total_car_type_in_lot_limit = self.env['lot.vehicle.relation'].search([('lot', '=', parking_lot), ('vehicle', '=', parking_ticket)], limit=1).quantity
         if total_car_type_in_lot_limit <= total_car_type_in_lot:
             return False
+
+        total_limit_lot = self.env['parking.lot'].search([('id', '=', parking_lot)]).total_limit_lot
+        total_car_in_lot = self.env['parking.lot'].search([('id', '=', parking_lot)]).total_car_now
+        if total_car_in_lot >= total_limit_lot:
+            return False
         return True
 
-    @api.model
-    def create(self, vals):
-        if self._check_lot_is_full(vals['car_type_id'], self.env.context.get('default_parking_lot_id')) == False:
-            raise ValidationError('This lot is full')
-
+    def _check_is_still_in_working_time(self):
         working_time_to = self.env['parking.lot'].search([('id', '=', self.env.context.get('default_parking_lot_id'))]).working_time_to
         working_time_from = self.env['parking.lot'].search([('id', '=', self.env.context.get('default_parking_lot_id'))]).working_time_from
         local = self.env.user.tz
         now_utc = datetime.now(timezone('UTC'))
         now_asia = now_utc.astimezone(timezone(local))
         if now_asia.hour >= working_time_to or now_asia.hour < working_time_from:
-            raise ValidationError("This lot isn't open")
+            return True
+        return False
 
+    @api.model
+    def create(self, vals):
+        # Compute is number of ticket in this lot is full
+        if self._check_lot_is_full(vals['car_type_id'], self.env.context.get('default_parking_lot_id')) == False:
+            raise ValidationError('This lot is full')
+
+        # Compute is checkin of parking ticket still in working time
+        if self._check_is_still_in_working_time():
+            raise ValidationError('Not in working time')
+
+        # Create ref code for parking ticket
         vals['code'] = self.create_ref_code()
         return super().create(vals)
 
