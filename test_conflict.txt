@@ -1,1 +1,2 @@
-This thanhdong1 conflict
+<<<<<<< HEAD
+This thanhdong and nhattin conflict
